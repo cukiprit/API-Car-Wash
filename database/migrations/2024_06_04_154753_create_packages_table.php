@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->enum('car_type', ['small/medium', 'large/big/suv', 'premium']);
-            $table->enum('service_type', ['express glow', 'hidrolik glow', 'extra glow']);
-            $table->decimal('price', 8, 2);
-            $table->text('description')->nullable();
+            $table->string('merk_film', 255);
+            $table->enum('jenis_film', ['full', 'samping-belakang', 'depan']);
+            $table->decimal('harga', 8, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('packages');
     }
 };

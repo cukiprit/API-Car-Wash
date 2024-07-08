@@ -20,4 +20,9 @@ class Service extends Model
         'price',
         'description',
     ];
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

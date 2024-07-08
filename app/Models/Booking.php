@@ -20,6 +20,21 @@ class Booking extends Model
         'booking_time',
         'booking_date',
         'status',
-        'id_services'
+        'id_service'
     ];
+
+    // public function package()
+    // {
+    //     return $this->belongsTo(Package::class);
+    // }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'id_service');
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }

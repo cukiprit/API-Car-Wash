@@ -12,102 +12,76 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::paginate(10);
-        return response()->json([
-            'status' => 'success',
-            'data' => $services
-        ], 200);
+        return $this->jsonResponse('success', $services, 200);
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'car_type' => 'required|in:small/medium,large/big/suv,premium',
-            'service_type' => 'required|in:Express Glow,Hidrolik Glow,Extra Glow',
-            'price' => 'required|numeric',
-            'description' => 'required|string'
-        ]);
+        $validator = $this->validateService($request);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
+            return $this->jsonResponse('error', $validator->errors(), 422);
         }
 
-        $service = Service::create($request->all());
+        $validated = $validator->validated();
+        $service = Service::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $service
-        ], 201);
+        return $this->jsonResponse('success', $service, 201);
     }
 
-    public function show($id)
+    public function show(Service $service)
     {
-        $service = Service::find($id);
-
         if (is_null($service)) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => 'Service Not Found!'
-            ], 404);
+            return $this->jsonResponse('error', 'Service Not Found!', 404);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $service
-        ], 200);
+        return $this->jsonResponse('success', $service, 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Service $service)
     {
-        $validator = Validator::make($request->all(), [
-            'car_type' => 'required|in:small/medium,large/big/suv,premium',
-            'service_type' => 'required|in:Express Glow,Hidrolik Glow,Extra Glow',
-            'price' => 'required|numeric',
-            'description' => 'required|string'
-        ]);
+        $validator = $this->validateService($request);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $validator->errors()
-            ], 422);
+            return $this->jsonResponse('error', $service, 422);
         }
-
-        $service = Service::find($id);
 
         if (is_null($service)) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => 'Service Not Found!'
-            ], 404);
+            return $this->jsonResponse('error', 'Service Not Found!', 404);
         }
 
-        $service->update($request->all());
+        $validated = $validator->validated();
+        $service->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $service
-        ], 200);
+        return $this->jsonResponse('success', $service, 200);
     }
 
-    public function destroy($id)
+    public function destroy(Service $service)
     {
-        $service = Service::find($id);
-
         if (is_null($service)) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => 'No Service Found!'
-            ], 404);
+            return $this->jsonResponse('error', 'Service Not Found!', 404);
         }
 
         $service->delete();
 
+        return $this->jsonResponse('success', 'Service Deleted!', 200);
+    }
+
+    private function validateService(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'car_type' => 'required|in:small/medium,large/big/suv,premium',
+            'service_type' => 'required|in:Express Glow,Hidrolik Glow,Extra Glow',
+            'price' => 'required|numeric',
+            'description' => 'required|string'
+        ]);
+    }
+
+    private function jsonResponse($status, $data, $code)
+    {
         return response()->json([
-            'status' => 'success',
-            'data' => 'Service Deleted!'
-        ], 200);
+            'status' => $status,
+            'data' => $data,
+        ], $code);
     }
 }

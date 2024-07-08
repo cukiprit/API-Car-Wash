@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_method');
             $table->unsignedBigInteger('id_booking');
             $table->decimal('amount', 8, 2);
-            $table->enum('status', ['pending', 'paid', 'cancelled']);
+            $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending');
             $table->timestamps();
 
             $table->foreign('id_booking')->references('id')->on('bookings');
