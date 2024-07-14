@@ -19,14 +19,14 @@ class Booking extends Model
         'phone',
         'booking_time',
         'booking_date',
-        'status',
-        'id_service'
+        'id_service',
+        'id_package'
     ];
 
-    // public function package()
-    // {
-    //     return $this->belongsTo(Package::class);
-    // }
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
 
     public function service()
     {

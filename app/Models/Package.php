@@ -9,6 +9,12 @@ class Package extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'merk_kaca',
+        'jenis_kaca',
+        'harga',
+    ];
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('merk_film', 255);
-            $table->enum('jenis_film', ['full', 'samping-belakang', 'depan']);
+            $table->string('merk_kaca', 255);
+            $table->enum('jenis_kaca', ['full', 'samping-belakang', 'depan']);
             $table->decimal('harga', 8, 2);
             $table->timestamps();
         });

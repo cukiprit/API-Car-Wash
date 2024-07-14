@@ -89,9 +89,9 @@ class BookingController extends Controller
             'phone' => 'required|string|max:16',
             'booking_time' => 'required|date_format:H:i:s',
             'booking_date' => 'required|date',
-            'status' => 'required|in:scheduled,completed,cancelled',
+            // 'status' => 'required|in:scheduled,completed,cancelled',
             'id_service' => 'required|exists:services,id',
-            // 'id_packages' => 'nullable|exists:packages,id'
+            'id_packages' => 'nullable|exists:packages,id'
         ]);
     }
 
