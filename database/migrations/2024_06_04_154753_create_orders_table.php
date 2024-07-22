@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending');
             $table->timestamps();
 
-            $table->foreign('id_booking')->references('id')->on('bookings');
+            $table->foreign('id_booking')->references('id')->on('bookings')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

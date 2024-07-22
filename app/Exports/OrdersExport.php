@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class OrdersExport implements FromCollection
+class OrdersExport implements FromCollection, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
