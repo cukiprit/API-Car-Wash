@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Order;
@@ -9,6 +10,7 @@ use Exception;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -96,5 +98,10 @@ class OrderController extends Controller
         }
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function exportPayments()
+    {
+        return Excel::download(new OrdersExport, 'rekap.xlsx');
     }
 }

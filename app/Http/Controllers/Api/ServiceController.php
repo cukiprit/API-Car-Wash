@@ -71,9 +71,9 @@ class ServiceController extends Controller
     {
         return Validator::make($request->all(), [
             'car_type' => 'required|in:small/medium,large/big/suv,premium',
-            'service_type' => 'required|in:Express Glow,Hidrolik Glow,Extra Glow',
+            'service_type' => 'required|in:express glow,hidrolik glow,extra glow',
             'price' => 'required|numeric',
-            'description' => 'required|string'
+            'description' => 'string'
         ]);
     }
 

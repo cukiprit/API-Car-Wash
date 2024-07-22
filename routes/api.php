@@ -34,6 +34,7 @@ Route::middleware('api')->group(function () {
     Route::put('/bookings/{booking}', [BookingController::class, 'update']);
     Route::delete('/bookings/{booking}', [BookingController::class, 'destroy']);
 
+    Route::get('/export-payments', [OrderController::class, 'exportPayments']);
     Route::post('/payment', [OrderController::class, 'createPayment']);
     Route::post('/payment/callback', [OrderController::class, 'paymentCallback']);
 });
