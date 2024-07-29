@@ -63,9 +63,23 @@ class OrderController extends Controller
     public function createPayment(Request $request)
     {
         $booking = Booking::find($request->id_booking);
+
+        if (!$booking) {
+            return response()->json(['error' => 'Booking not found'], 404);
+        }
+
+        $service = $booking->service;
+        $package = $booking->package;
+
+        if (!$service) {
+            return response()->json(['error' => 'Service not found for the booking'], 404);
+        }
+
+        $total = $service->price + ($package ? $package->harga : 0);
+
         $order = Order::create([
             'id_booking' => $booking->id,
-            'amount' => $booking->service->price,
+            'amount' => $total,
             'status' => 'pending'
         ]);
 
