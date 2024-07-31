@@ -75,7 +75,11 @@ class OrderController extends Controller
             return response()->json(['error' => 'Service not found for the booking'], 404);
         }
 
+        // echo $package->harga;
+
         $total = $service->price + ($package ? $package->harga : 0);
+
+        // echo $total;
 
         $order = Order::create([
             'id_booking' => $booking->id,

@@ -91,7 +91,7 @@ class BookingController extends Controller
             'booking_date' => 'required|date',
             // 'status' => 'required|in:scheduled,completed,cancelled',
             'id_service' => 'required|exists:services,id',
-            'id_packages' => 'nullable|exists:packages,id'
+            'id_package' => 'nullable|exists:packages,id'
         ]);
     }
 
